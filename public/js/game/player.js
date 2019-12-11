@@ -7,8 +7,8 @@ class Player {
     this.points = [];
     this.rotateSpeed = 0.08;
     this.r = 12;
-    this.maxSpeed = 5;
-    this.boostSpeed = 0.08;
+    this.maxSpeed = 6;
+    this.boostSpeed = 0.09;
     this._init();
   }
 

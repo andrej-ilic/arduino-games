@@ -18,18 +18,18 @@ class Asteroid {
   _init() {
     switch (this.type) {
       case ASTEROID_TYPE.SMALL:
-        this.speed = 1.3;
-        this.size = 14;
+        this.speed = 1.6;
+        this.size = 17;
         this.sides = 16;
         break;
       case ASTEROID_TYPE.MEDIUM:
-        this.speed = 0.8;
-        this.size = 28;
+        this.speed = 1.2;
+        this.size = 31;
         this.sides = 16;
         break;
       case ASTEROID_TYPE.BIG:
-        this.speed = 0.2;
-        this.size = 45;
+        this.speed = 0.8;
+        this.size = 48;
         this.sides = 16;
         break;
       default:

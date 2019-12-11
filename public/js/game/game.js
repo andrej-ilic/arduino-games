@@ -10,6 +10,7 @@ class Game {
     this.level = 1;
     this.gameOver = false;
     this.won = false;
+    this.score = 0;
 
     for (let i = 0; i < ASTEROIDS_PER_LEVEL[this.level - 1]; i++) {
       this.asteroids.push(new Asteroid(ASTEROID_TYPE.BIG));
@@ -19,7 +20,7 @@ class Game {
   nextLevel() {
     this.level++;
 
-    if (this.level > 3) {
+    if (this.level > ASTEROIDS_PER_LEVEL.length) {
       this.gameOver = true;
       this.won = true;
       return;
@@ -32,11 +33,25 @@ class Game {
 
   draw() {
     if (this.gameOver) {
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textSize(WIDTH / 9);
+      if (!this.won) {
+        text("GAME OVER", WIDTH / 2, HEIGHT / 2);
+      } else {
+        text("YOU WON", WIDTH / 2, HEIGHT / 2);
+      }
+
       handleInput();
       return;
     }
 
     background(0);
+
+    fill(255);
+    textAlign(LEFT, TOP);
+    textSize(HEIGHT / 16);
+    text(this.score, 5, 5);
 
     this.handleInput();
 
@@ -55,6 +70,9 @@ class Game {
     this.asteroids.forEach(a => {
       this.bullets.forEach(b => {
         if (a.collidesWithBullet(b)) {
+          if (a.type == ASTEROID_TYPE.BIG) this.score += 10;
+          if (a.type == ASTEROID_TYPE.MEDIUM) this.score += 20;
+          if (a.type == ASTEROID_TYPE.SMALL) this.score += 30;
           a.break().forEach(newAsteroid => this.asteroids.push(newAsteroid));
           a.canBeDeleted = true;
           b.canBeDeleted = true;

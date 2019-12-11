@@ -11,6 +11,7 @@ function setup() {
   canvas.parent("sketch");
   WIDTH = width;
   HEIGHT = height;
+  textFont("Arial Black");
 
   socket.on("data", data => {
     data = data.split(",").map(x => Number(x));

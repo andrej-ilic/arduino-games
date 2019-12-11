@@ -1,7 +1,7 @@
 class Bullet {
   constructor(pos, dir) {
     this.pos = pos;
-    this.speed = 3;
+    this.speed = 4;
     dir.normalize();
     this.vel = dir.mult(this.speed);
     this.travelled = 0;
