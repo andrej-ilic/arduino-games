@@ -1,7 +1,7 @@
 #include <Esplora.h>
 
-int xValue;
-bool leftPressed, downPressed;
+int xValuePrev = 1000, xValue;
+bool leftPressedPrev = -1, leftPressed, downPressedPrev = -1, downPressed;
 char buffer[128];
 
 void printJSON() {
@@ -14,11 +14,19 @@ void setup() {
 }
 
 void loop() {
-  xValue = Esplora.readJoystickX() * (-1);
+  xValue = Esplora.readJoystickX();
   leftPressed = !Esplora.readButton(SWITCH_LEFT);
   downPressed = !Esplora.readButton(SWITCH_DOWN);
 
-  printJSON();
+  xValue = (xValue / 50) * (-50);
 
-  delay(50);
+  if (leftPressed != leftPressedPrev or downPressed != downPressedPrev or xValue != xValuePrev) {
+    printJSON();
+  }
+
+  xValuePrev = xValue;
+  leftPressedPrev = leftPressed;
+  downPressedPrev = downPressed;
+  
+  delay(33);
 }

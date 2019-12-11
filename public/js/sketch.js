@@ -12,7 +12,7 @@ function setup() {
 
   socket.on("data", data => {
     data = JSON.parse(data);
-    data.x = map(data.x, -511, 512, -1, 1);
+    data.x = map(data.x, -500, 500, -1, 1);
     for (const key in data) {
       controller[key] = data[key];
     }
