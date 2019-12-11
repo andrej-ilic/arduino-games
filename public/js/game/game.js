@@ -33,16 +33,15 @@ class Game {
 
   draw() {
     if (this.gameOver) {
-      fill(255);
-      textAlign(CENTER, CENTER);
-      textSize(WIDTH / 9);
-      if (!this.won) {
-        text("GAME OVER", WIDTH / 2, HEIGHT / 2);
-      } else {
-        text("YOU WON", WIDTH / 2, HEIGHT / 2);
-      }
-
-      handleInput();
+      changeState(
+        new GameOver(
+          this.player,
+          this.bullets,
+          this.asteroids,
+          this.won,
+          this.score
+        )
+      );
       return;
     }
 

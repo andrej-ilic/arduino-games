@@ -4,10 +4,10 @@ const controller = { x: 0, y: 0, up: 0, down: 0, left: 0, right: 0 };
 let prevController = {};
 let WIDTH, HEIGHT;
 
-let game;
+let state;
 
 function setup() {
-  const canvas = createCanvas(600, 600);
+  const canvas = createCanvas(800, 800);
   canvas.parent("sketch");
   WIDTH = width;
   HEIGHT = height;
@@ -23,13 +23,13 @@ function setup() {
     controller.right = data[5];
   });
 
-  game = new Game();
+  state = new Menu();
 }
 
 function draw() {
-  game.draw();
+  state.draw();
 }
 
-function handleInput() {
-  game.handleInput();
+function changeState(newState) {
+  state = newState;
 }

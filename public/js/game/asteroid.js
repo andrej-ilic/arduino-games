@@ -4,7 +4,7 @@ const ASTEROID_TYPE = {
   BIG: 3
 };
 
-const ASTEROIDS_PER_LEVEL = [4, 5, 7];
+const ASTEROIDS_PER_LEVEL = [6, 8, 9];
 
 class Asteroid {
   constructor(type, pos) {
