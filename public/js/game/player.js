@@ -5,7 +5,7 @@ class Player {
     this.acc = createVector(0, 0);
     this.dir = createVector(0, -1);
     this.points = [];
-    this.rotateSpeed = 0.05;
+    this.rotateSpeed = 0.07;
     this.r = 12;
     this.maxSpeed = 5;
     this.boostSpeed = 0.08;
