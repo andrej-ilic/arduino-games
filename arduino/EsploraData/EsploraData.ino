@@ -8,7 +8,7 @@ bool upPressedPrev = -1, downPressedPrev = -1, leftPressedPrev = -1, rightPresse
 bool dataChanged() {
   return xValue != xValuePrev or
          //yValue != yValuePrev or
-         //upPressed != upPressedPrev or
+         upPressed != upPressedPrev or
          downPressed != downPressedPrev or
          //rightPressed != rightPressedPrev or
          leftPressed != leftPressedPrev;

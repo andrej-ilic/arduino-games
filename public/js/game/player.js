@@ -1,7 +1,7 @@
 class Player {
   constructor() {
     this.pos = createVector(WIDTH / 2, HEIGHT / 2);
-    this.vel = createVector(0, 0);
+    this.vel = createVector(0, -0.2);
     this.acc = createVector(0, 0);
     this.dir = createVector(0, -1);
     this.points = [];
@@ -22,6 +22,8 @@ class Player {
     this.points[2] = createVector(0, 0);
     vec.rotate(-2 * angle);
     this.points[3] = vec.copy();
+
+    this.points.forEach(p => p.add(this.pos));
   }
 
   draw() {
@@ -30,15 +32,12 @@ class Player {
     strokeWeight(1);
 
     beginShape();
-    this.points.forEach(p => {
-      p = p.copy().add(this.pos);
-      vertex(p.x, p.y);
-    });
+    this.points.forEach(p => vertex(p.x, p.y));
     endShape(CLOSE);
   }
 
   shoot() {
-    return new Bullet(this.points[0].copy().add(this.pos), this.dir.copy());
+    return new Bullet(this.points[0].copy(), this.dir.copy());
   }
 
   boost() {
@@ -52,7 +51,12 @@ class Player {
 
   rotate(dir) {
     this.dir.rotate(this.rotateSpeed * dir);
-    this.points.forEach(p => p.rotate(this.rotateSpeed * dir));
+    this.points.forEach(p =>
+      p
+        .sub(this.pos)
+        .rotate(this.rotateSpeed * dir)
+        .add(this.pos)
+    );
   }
 
   update() {
@@ -60,10 +64,23 @@ class Player {
     this.acc.mult(0);
     this.vel.limit(this.maxSpeed);
     this.pos.add(this.vel);
+    this.points.forEach(p => p.add(this.vel));
 
-    if (this.pos.x < 0) this.pos.x += WIDTH;
-    if (this.pos.x > WIDTH) this.pos.x -= WIDTH;
-    if (this.pos.y < 0) this.pos.y += HEIGHT;
-    if (this.pos.y > HEIGHT) this.pos.y -= HEIGHT;
+    if (this.pos.x < 0) {
+      this.pos.x += WIDTH;
+      this.points.forEach(p => (p.x += WIDTH));
+    }
+    if (this.pos.x > WIDTH) {
+      this.pos.x -= WIDTH;
+      this.points.forEach(p => (p.x -= WIDTH));
+    }
+    if (this.pos.y < 0) {
+      this.pos.y += HEIGHT;
+      this.points.forEach(p => (p.y += HEIGHT));
+    }
+    if (this.pos.y > HEIGHT) {
+      this.pos.y -= HEIGHT;
+      this.points.forEach(p => (p.y -= HEIGHT));
+    }
   }
 }
