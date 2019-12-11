@@ -37,6 +37,10 @@ class Player {
     endShape(CLOSE);
   }
 
+  shoot() {
+    return new Bullet(this.points[0].copy().add(this.pos), this.dir.copy());
+  }
+
   boost() {
     this.acc.add(
       this.dir

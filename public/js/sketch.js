@@ -1,8 +1,10 @@
 const socket = io(`http://localhost:5000`);
 
-const controller = {};
-let WIDTH, HEIGHT;
+const controller = { x: 0, y: 0, up: 0, down: 0, left: 0, right: 0 };
+let prevController = {};
 let player;
+let bullets = [];
+let WIDTH, HEIGHT;
 
 function setup() {
   const canvas = createCanvas(600, 600);
@@ -29,15 +31,30 @@ function draw() {
 
   handleInput();
 
-  player.update();
   player.draw();
+  player.update();
+
+  bullets = bullets.filter(b => !b.canBeDeleted);
+  bullets.forEach(b => {
+    b.draw();
+    b.update();
+  });
 }
 
 function handleInput() {
   if (abs(controller.x) > 0.1) {
     player.rotate(controller.x);
   }
+
   if (controller.down) {
     player.boost();
   }
+
+  if (controller.left) {
+    if (!prevController.left) {
+      bullets.push(player.shoot());
+    }
+  }
+
+  prevController = { ...controller };
 }
