@@ -1,8 +1,8 @@
+const socket = io(`http://localhost:5000`);
+
 const controller = {};
 let WIDTH, HEIGHT;
-let p;
-
-const socket = io(`http://localhost:5000`);
+let player;
 
 function setup() {
   const canvas = createCanvas(600, 600);
@@ -11,14 +11,17 @@ function setup() {
   HEIGHT = height;
 
   socket.on("data", data => {
-    data = JSON.parse(data);
-    data.x = map(data.x, -500, 500, -1, 1);
-    for (const key in data) {
-      controller[key] = data[key];
-    }
+    data = data.split(",").map(x => Number(x));
+
+    controller.x = map(data[0], -10, 10, -1, 1);
+    controller.y = map(data[1], -10, 10, -1, 1);
+    controller.up = data[2];
+    controller.down = data[3];
+    controller.left = data[4];
+    controller.right = data[5];
   });
 
-  p = new Player();
+  player = new Player();
 }
 
 function draw() {
@@ -26,15 +29,15 @@ function draw() {
 
   handleInput();
 
-  p.update();
-  p.draw();
+  player.update();
+  player.draw();
 }
 
 function handleInput() {
   if (abs(controller.x) > 0.1) {
-    p.rotate(controller.x);
+    player.rotate(controller.x);
   }
   if (controller.down) {
-    p.boost();
+    player.boost();
   }
 }
