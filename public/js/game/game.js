@@ -7,6 +7,8 @@ class Game {
     this.player = new Player();
     this.asteroids = [];
     this.bullets = [];
+    this.stars = [];
+    this.particles = [];
     this.level = 1;
     this.gameOver = false;
     this.won = false;
@@ -14,6 +16,12 @@ class Game {
 
     for (let i = 0; i < ASTEROIDS_PER_LEVEL[this.level - 1]; i++) {
       this.asteroids.push(new Asteroid(ASTEROID_TYPE.BIG));
+    }
+
+    for (let i = 0; i < 30; i++) {
+      this.stars.push(
+        createVector(abs(random()) * WIDTH, abs(random()) * HEIGHT)
+      );
     }
   }
 
@@ -33,15 +41,7 @@ class Game {
 
   draw() {
     if (this.gameOver) {
-      changeState(
-        new GameOver(
-          this.player,
-          this.bullets,
-          this.asteroids,
-          this.won,
-          this.score
-        )
-      );
+      changeState(new GameOver(this));
       return;
     }
 
@@ -54,6 +54,8 @@ class Game {
 
     this.handleInput();
 
+    this.stars.forEach(s => point(s.x, s.y));
+
     this.player.draw();
     this.player.update();
 
@@ -63,15 +65,33 @@ class Game {
       b.update();
     });
 
-    this.asteroids = this.asteroids.filter(b => !b.canBeDeleted);
+    this.asteroids = this.asteroids.filter(a => !a.canBeDeleted);
     if (this.asteroids.length === 0) this.nextLevel();
 
     this.asteroids.forEach(a => {
       this.bullets.forEach(b => {
         if (a.collidesWithBullet(b)) {
-          if (a.type == ASTEROID_TYPE.BIG) this.score += 10;
-          if (a.type == ASTEROID_TYPE.MEDIUM) this.score += 20;
-          if (a.type == ASTEROID_TYPE.SMALL) this.score += 30;
+          if (a.type == ASTEROID_TYPE.BIG) {
+            this.particles = [
+              ...this.particles,
+              ...Particle.generateFromPosition(a.pos, 10)
+            ];
+            this.score += 10;
+          }
+          if (a.type == ASTEROID_TYPE.MEDIUM) {
+            this.particles = [
+              ...this.particles,
+              ...Particle.generateFromPosition(a.pos, 8)
+            ];
+            this.score += 20;
+          }
+          if (a.type == ASTEROID_TYPE.SMALL) {
+            this.particles = [
+              ...this.particles,
+              ...Particle.generateFromPosition(a.pos, 5)
+            ];
+            this.score += 30;
+          }
           a.break().forEach(newAsteroid => this.asteroids.push(newAsteroid));
           a.canBeDeleted = true;
           b.canBeDeleted = true;
@@ -84,6 +104,12 @@ class Game {
 
       a.draw();
       a.update();
+    });
+
+    this.particles = this.particles.filter(p => !p.canBeDeleted);
+    this.particles.forEach(p => {
+      p.draw();
+      p.update();
     });
   }
 

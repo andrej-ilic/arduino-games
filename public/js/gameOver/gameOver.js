@@ -1,8 +1,9 @@
 class GameOver {
-  constructor(player, bullets, asteroids, won, score) {
+  constructor({ player, bullets, asteroids, won, score, stars }) {
     this.player = player;
     this.bullets = bullets;
     this.asteroids = asteroids;
+    this.stars = stars;
     this.won = won;
     this.score = score;
 
@@ -21,7 +22,10 @@ class GameOver {
   draw() {
     this.handleInput();
 
+    stroke(255);
+
     background(0);
+    this.stars.forEach(s => point(s.x, s.y));
     this.player.draw();
     this.bullets.forEach(p => p.draw());
     this.asteroids.forEach(p => p.draw());

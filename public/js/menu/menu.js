@@ -7,6 +7,7 @@ class Menu {
 
   _init() {
     this.asteroids = [];
+    this.stars = [];
     this.items = ["Play", "Scoreboard"];
     this.selectedItem = 0;
     this.padding = HEIGHT / 20;
@@ -16,6 +17,12 @@ class Menu {
       this.asteroids.push(new Asteroid(random(Object.values(ASTEROID_TYPE))));
     }
 
+    for (let i = 0; i < 30; i++) {
+      this.stars.push(
+        createVector(abs(random()) * WIDTH, abs(random()) * HEIGHT)
+      );
+    }
+
     textAlign(CENTER, CENTER);
   }
 
@@ -23,6 +30,9 @@ class Menu {
     background(0);
 
     this.handleInput();
+
+    stroke(255);
+    this.stars.forEach(s => point(s.x, s.y));
 
     this.asteroids.forEach(a => {
       a.draw();

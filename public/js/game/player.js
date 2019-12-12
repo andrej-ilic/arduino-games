@@ -1,7 +1,7 @@
 class Player {
   constructor() {
     this.pos = createVector(WIDTH / 2, HEIGHT / 2);
-    this.vel = createVector(0, -0.2);
+    this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
     this.dir = createVector(0, -1);
     this.boosting = false;
@@ -9,8 +9,8 @@ class Player {
     this.boostPoints = [];
     this.rotateSpeed = 0.08;
     this.r = 12;
-    this.maxSpeed = 6;
-    this.boostSpeed = 0.09;
+    this.maxSpeed = 7;
+    this.boostSpeed = 0.08;
     this._init();
   }
 

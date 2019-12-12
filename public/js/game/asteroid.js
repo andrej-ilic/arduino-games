@@ -19,18 +19,21 @@ class Asteroid {
     switch (this.type) {
       case ASTEROID_TYPE.SMALL:
         this.speed = 1.6;
-        this.size = 17;
+        this.size = 11;
         this.sides = 16;
+        this.rotateSpeed = 0.015;
         break;
       case ASTEROID_TYPE.MEDIUM:
         this.speed = 1.2;
-        this.size = 31;
+        this.size = 26;
         this.sides = 16;
+        this.rotateSpeed = 0.008;
         break;
       case ASTEROID_TYPE.BIG:
         this.speed = 0.8;
-        this.size = 48;
+        this.size = 44;
         this.sides = 16;
+        this.rotateSpeed = 0.003;
         break;
       default:
         break;
@@ -91,9 +94,20 @@ class Asteroid {
     endShape(CLOSE);
   }
 
+  rotate() {
+    this.points.forEach(p =>
+      p
+        .sub(this.pos)
+        .rotate(this.rotateSpeed)
+        .add(this.pos)
+    );
+  }
+
   update() {
     this.pos.add(this.vel);
     this.points.forEach(p => p.add(this.vel));
+
+    this.rotate();
 
     if (this.pos.x < 0) {
       this.pos.x += WIDTH;
