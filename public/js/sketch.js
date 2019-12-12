@@ -23,7 +23,7 @@ function setup() {
     controller.right = data[5];
   });
 
-  state = new Menu();
+  state = Menu.getInstance();
 }
 
 function draw() {

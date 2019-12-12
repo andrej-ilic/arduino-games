@@ -1,8 +1,14 @@
 class Menu {
   constructor() {
     this.asteroidCount = 12;
-
     this._init();
+  }
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new Menu();
+    }
+    return this.instance;
   }
 
   _init() {
@@ -83,6 +89,8 @@ class Menu {
       if (!prevController.right) {
         if (this.selectedItem === 0) {
           changeState(new Game());
+        } else if (this.selectedItem === 1) {
+          changeState(new Scoreboard());
         }
       }
     }
@@ -91,6 +99,8 @@ class Menu {
       if (!prevController.left) {
         if (this.selectedItem === 0) {
           changeState(new Game());
+        } else if (this.selectedItem === 1) {
+          changeState(new Scoreboard());
         }
       }
     }
