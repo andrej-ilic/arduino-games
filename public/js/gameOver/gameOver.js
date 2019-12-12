@@ -11,7 +11,7 @@ class GameOver {
   }
 
   _init() {
-    this.items = ["Play again", "Scoreboard", "Menu"];
+    this.items = ["Save score", "Play again", "Menu"];
     this.selectedItem = 0;
     this.padding = HEIGHT * 0.05;
     this.margin = HEIGHT * 0.19;
@@ -81,11 +81,11 @@ class GameOver {
     if (controller.right) {
       if (!prevController.right) {
         if (this.selectedItem === 0) {
+          changeState(new SaveScore(this.score));
+        } else if (this.selectedItem === 1) {
           changeState(new Game());
-        }
-
-        if (this.selectedItem === 2) {
-          changeState(new Menu());
+        } else if (this.selectedItem === 2) {
+          changeState(Menu.getInstance());
         }
       }
     }
@@ -93,11 +93,11 @@ class GameOver {
     if (controller.left) {
       if (!prevController.left) {
         if (this.selectedItem === 0) {
+          changeState(new SaveScore(this.score));
+        } else if (this.selectedItem === 1) {
           changeState(new Game());
-        }
-
-        if (this.selectedItem === 2) {
-          changeState(new Menu());
+        } else if (this.selectedItem === 2) {
+          changeState(Menu.getInstance());
         }
       }
     }
