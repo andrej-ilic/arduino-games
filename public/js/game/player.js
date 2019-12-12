@@ -11,6 +11,7 @@ class Player {
     this.r = 12;
     this.maxSpeed = 7;
     this.boostSpeed = 0.08;
+    this.dead = false;
     this._init();
   }
 
@@ -37,10 +38,35 @@ class Player {
     this.boostPoints.forEach(p => p.add(this.pos));
   }
 
+  die() {
+    this.dead = true;
+    this.deadVectors = this.points.map(() =>
+      p5.Vector.random2D().mult(random(0.3, 0.5))
+    );
+    this.points.splice(0, 0, this.points[0].copy());
+    this.points.splice(2, 0, this.points[2].copy());
+    this.points.splice(4, 0, this.points[4].copy());
+    this.points.splice(6, 0, this.points[6].copy());
+  }
+
   draw() {
     fill(0);
     stroke(255);
     strokeWeight(1);
+
+    if (this.dead) {
+      beginShape(LINES);
+      vertex(this.points[0].x, this.points[0].y);
+      vertex(this.points[2].x, this.points[2].y);
+      vertex(this.points[1].x, this.points[1].y);
+      vertex(this.points[7].x, this.points[7].y);
+      vertex(this.points[3].x, this.points[3].y);
+      vertex(this.points[4].x, this.points[4].y);
+      vertex(this.points[5].x, this.points[5].y);
+      vertex(this.points[6].x, this.points[6].y);
+      endShape();
+      return;
+    }
 
     beginShape();
     this.points.forEach(p => vertex(p.x, p.y));
@@ -88,6 +114,18 @@ class Player {
   }
 
   update() {
+    if (this.dead) {
+      this.points[0].add(this.deadVectors[0]);
+      this.points[2].add(this.deadVectors[0]);
+      this.points[1].add(this.deadVectors[1]);
+      this.points[7].add(this.deadVectors[1]);
+      this.points[3].add(this.deadVectors[2]);
+      this.points[4].add(this.deadVectors[2]);
+      this.points[5].add(this.deadVectors[3]);
+      this.points[6].add(this.deadVectors[3]);
+      return;
+    }
+
     this.vel.add(this.acc);
     this.acc.mult(0);
     this.vel.limit(this.maxSpeed);

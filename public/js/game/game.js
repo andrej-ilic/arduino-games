@@ -13,6 +13,7 @@ class Game {
     this.gameOver = false;
     this.won = false;
     this.score = 0;
+    this.pause = 120;
 
     for (let i = 0; i < ASTEROIDS_PER_LEVEL[this.level - 1]; i++) {
       this.asteroids.push(new Asteroid(ASTEROID_TYPE.BIG));
@@ -40,12 +41,32 @@ class Game {
   }
 
   draw() {
+    background(0);
+
     if (this.gameOver) {
+      if (this.pause-- > 0) {
+        this.stars.forEach(s => point(s.x, s.y));
+        this.bullets = this.bullets.filter(b => !b.canBeDeleted);
+        this.bullets.forEach(b => {
+          b.draw();
+          b.update();
+        });
+        this.asteroids.forEach(a => {
+          a.draw();
+          a.update();
+        });
+        this.player.draw();
+        this.player.update();
+        this.particles = this.particles.filter(p => !p.canBeDeleted);
+        this.particles.forEach(p => {
+          p.draw();
+          p.update();
+        });
+        return;
+      }
       changeState(new GameOver(this));
       return;
     }
-
-    background(0);
 
     fill(255);
     textAlign(LEFT, TOP);
@@ -99,6 +120,11 @@ class Game {
       });
 
       if (a.collidesWithPlayer(this.player)) {
+        this.particles = [
+          ...this.particles,
+          ...Particle.generateFromPosition(this.player.pos, 12)
+        ];
+        this.player.die();
         this.gameOver = true;
       }
 

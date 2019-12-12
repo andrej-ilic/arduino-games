@@ -4,7 +4,7 @@ class Bullet {
     this.speed = 4;
     dir.normalize();
     this.vel = dir.mult(this.speed);
-    this.travelled = 0;
+    this.range = HEIGHT * 0.3;
     this.canBeDeleted = false;
   }
 
@@ -15,8 +15,8 @@ class Bullet {
   }
 
   update() {
-    this.travelled += this.speed;
-    if (this.travelled > WIDTH + HEIGHT) {
+    this.range -= this.speed;
+    if (this.range < 0) {
       this.canBeDeleted = true;
       return;
     }
