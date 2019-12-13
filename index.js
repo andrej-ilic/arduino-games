@@ -3,12 +3,13 @@ const express = require("express");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
-const SerialPort = require("serialport")(process.env.USB_PATH, {
+const SerialPort = require("serialport");
+const Readline = require("@serialport/parser-readline");
+const port = new SerialPort(process.env.USB_PATH, {
   baudRate: 115200
 });
-const Readline = require("@serialport/parser-readline");
 const parser = new Readline();
-SerialPort.pipe(parser);
+port.pipe(parser);
 
 const { createFileIfNotExists, readFile, appendToFile } = require("./helpers");
 
@@ -55,6 +56,8 @@ app.post("/scoreboard/:name/:score", (req, res) => {
 
 io.on("connection", socket => {
   parser.on("data", line => socket.emit("data", line));
+
+  socket.on("sound", data => port.write(data));
 });
 
 server.listen(process.env.PORT);

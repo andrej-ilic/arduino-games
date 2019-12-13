@@ -23,6 +23,22 @@ void setup() {
 }
 
 void loop() {
+  if (Serial.available()) {
+    switch (Serial.read()) {
+      case 'f':
+        Esplora.tone(523, 50);
+        break;
+      case 'b':
+        Esplora.tone(262, 100);
+        break;
+      case 'd':
+        Esplora.tone(100, 1000);
+        break;
+      default:
+        break;
+    }
+  }
+  
   xValue = Esplora.readJoystickX() / (-50);
   yValue = Esplora.readJoystickY() / (-50);
   upPressed = !Esplora.readButton(SWITCH_UP);

@@ -39,6 +39,10 @@ class Player {
   }
 
   die() {
+    if (Menu.soundsOn) {
+      socket.emit("sound", "d");
+    }
+
     this.dead = true;
     this.deadVectors = this.points.map(() =>
       p5.Vector.random2D().mult(random(0.3, 0.5))
@@ -84,6 +88,10 @@ class Player {
   }
 
   shoot() {
+    if (Menu.soundsOn) {
+      socket.emit("sound", "f");
+    }
+
     return new Bullet(this.points[0].copy(), this.dir.copy());
   }
 

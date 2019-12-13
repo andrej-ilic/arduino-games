@@ -65,6 +65,10 @@ class Asteroid {
   }
 
   break() {
+    if (Menu.soundsOn) {
+      socket.emit("sound", "b");
+    }
+
     if (this.type == ASTEROID_TYPE.SMALL) {
       return [];
     }

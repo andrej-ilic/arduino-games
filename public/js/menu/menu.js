@@ -1,6 +1,7 @@
 class Menu {
   constructor() {
     this.asteroidCount = 12;
+    Menu.soundsOn = true;
     this._init();
   }
 
@@ -14,7 +15,7 @@ class Menu {
   _init() {
     this.asteroids = [];
     this.stars = [];
-    this.items = ["Play", "Scoreboard"];
+    this.items = ["Play", "Scoreboard", `Sound: On`];
     this.selectedItem = 0;
     this.padding = HEIGHT / 20;
     this.margin = HEIGHT / 8;
@@ -91,6 +92,9 @@ class Menu {
           changeState(new Game());
         } else if (this.selectedItem === 1) {
           changeState(new Scoreboard());
+        } else if (this.selectedItem === 2) {
+          this.items[2] = `Sound: ${Menu.soundsOn ? "Off" : "On"}`;
+          Menu.soundsOn = !Menu.soundsOn;
         }
       }
     }
@@ -101,6 +105,9 @@ class Menu {
           changeState(new Game());
         } else if (this.selectedItem === 1) {
           changeState(new Scoreboard());
+        } else if (this.selectedItem === 2) {
+          this.items[2] = `Sound: ${Menu.soundsOn ? "Off" : "On"}`;
+          Menu.soundsOn = !Menu.soundsOn;
         }
       }
     }
