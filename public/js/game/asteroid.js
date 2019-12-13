@@ -7,9 +7,10 @@ const ASTEROID_TYPE = {
 const ASTEROIDS_PER_LEVEL = [6, 8, 9];
 
 class Asteroid {
-  constructor(type, pos) {
+  constructor(type, pos, vel) {
     this.type = type;
     this.pos = pos;
+    this.vel = vel;
     this.points = [];
     this.canBeDeleted = false;
     this._init();
@@ -45,11 +46,15 @@ class Asteroid {
         .add(createVector(WIDTH / 2, HEIGHT / 2));
     }
 
-    this.vel = createVector(WIDTH / 2, HEIGHT / 2)
-      .sub(this.pos)
-      .normalize()
-      .mult(this.speed)
-      .rotate(random(-Math.PI / 4, Math.PI / 4));
+    if (!this.vel) {
+      this.vel = createVector(WIDTH / 2, HEIGHT / 2)
+        .sub(this.pos)
+        .normalize()
+        .mult(this.speed)
+        .rotate(random(-Math.PI / 4, Math.PI / 4));
+    } else {
+      this.vel.normalize().mult(this.speed);
+    }
 
     const angleInc = (2 * Math.PI) / this.sides;
     let vec = createVector(this.size, 0);
@@ -75,8 +80,8 @@ class Asteroid {
 
     const newType = this.type - 1;
     return [
-      new Asteroid(newType, this.pos.copy()),
-      new Asteroid(newType, this.pos.copy())
+      new Asteroid(newType, this.pos.copy(), p5.Vector.random2D()),
+      new Asteroid(newType, this.pos.copy(), p5.Vector.random2D())
     ];
   }
 
