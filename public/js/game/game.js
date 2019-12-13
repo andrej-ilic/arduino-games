@@ -160,6 +160,12 @@ class Game {
       }
     }
 
+    if (controller.right) {
+      if (!prevController.right) {
+        changeState(new PauseScreen(this));
+      }
+    }
+
     prevController = { ...controller };
   }
 }
