@@ -106,6 +106,7 @@ class Player {
   }
 
   rotate(dir) {
+    dir = map(dir, -10, 10, -1, 1);
     this.dir.rotate(this.rotateSpeed * dir);
     this.points.forEach(p =>
       p

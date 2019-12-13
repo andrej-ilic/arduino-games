@@ -15,8 +15,8 @@ function setup() {
 
   socket.on("data", data => {
     data = data.split(",").map(x => Number(x));
-    controller.x = map(data[0], -10, 10, -1, 1);
-    controller.y = map(data[1], -10, 10, -1, 1);
+    controller.x = data[0];
+    controller.y = data[1];
     controller.up = data[2];
     controller.down = data[3];
     controller.left = data[4];

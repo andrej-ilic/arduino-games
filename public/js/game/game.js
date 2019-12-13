@@ -140,7 +140,7 @@ class Game {
   }
 
   handleInput() {
-    if (abs(controller.x) > 0.1) {
+    if (abs(controller.x) > 0) {
       this.player.rotate(controller.x);
     }
 

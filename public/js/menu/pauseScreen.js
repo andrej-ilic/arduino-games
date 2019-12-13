@@ -56,6 +56,24 @@ class PauseScreen {
   }
 
   handleInput() {
+    if (controller.y === 10) {
+      if (prevController.y !== 10) {
+        this.selectedItem =
+          this.selectedItem - 1 < 0
+            ? this.items.length - 1
+            : this.selectedItem - 1;
+      }
+    }
+
+    if (controller.y === -10) {
+      if (prevController.y !== -10) {
+        this.selectedItem =
+          this.selectedItem + 1 === this.items.length
+            ? 0
+            : this.selectedItem + 1;
+      }
+    }
+
     if (controller.up) {
       if (!prevController.up) {
         this.selectedItem =
