@@ -20,6 +20,8 @@ class Menu {
     this.padding = HEIGHT / 20;
     this.margin = HEIGHT / 8;
 
+    this.loadSoundSettings();
+
     for (let i = 0; i < this.asteroidCount; i++) {
       this.asteroids.push(new Asteroid(random(Object.values(ASTEROID_TYPE))));
     }
@@ -31,6 +33,21 @@ class Menu {
     }
 
     textAlign(CENTER, CENTER);
+  }
+
+  loadSoundSettings() {
+    const soundOn = localStorage.getItem("asteroidSounds");
+    if (soundOn === null) {
+      localStorage.setItem("asteroidSounds", Menu.soundsOn);
+    } else {
+      Menu.soundsOn = JSON.parse(soundOn);
+    }
+    this.items[2] = `Sound: ${Menu.soundsOn ? "On" : "Off"}`;
+  }
+
+  changeSoundSettings(on) {
+    Menu.soundsOn = on;
+    localStorage.setItem("asteroidSounds", on);
   }
 
   draw() {
@@ -111,8 +128,8 @@ class Menu {
         } else if (this.selectedItem === 1) {
           changeState(new Scoreboard());
         } else if (this.selectedItem === 2) {
-          this.items[2] = `Sound: ${Menu.soundsOn ? "Off" : "On"}`;
-          Menu.soundsOn = !Menu.soundsOn;
+          this.changeSoundSettings(!Menu.soundsOn);
+          this.items[2] = `Sound: ${Menu.soundsOn ? "On" : "Off"}`;
         }
       }
     }
@@ -124,8 +141,8 @@ class Menu {
         } else if (this.selectedItem === 1) {
           changeState(new Scoreboard());
         } else if (this.selectedItem === 2) {
-          this.items[2] = `Sound: ${Menu.soundsOn ? "Off" : "On"}`;
-          Menu.soundsOn = !Menu.soundsOn;
+          this.changeSoundSettings(!Menu.soundsOn);
+          this.items[2] = `Sound: ${Menu.soundsOn ? "On" : "Off"}`;
         }
       }
     }

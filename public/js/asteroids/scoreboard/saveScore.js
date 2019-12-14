@@ -72,6 +72,22 @@ class SaveScore {
   }
 
   handleInput() {
+    if (controller.y === -10) {
+      if (prevController.y !== -10) {
+        if (this.charIndex !== 3) {
+          this.prevChar();
+        }
+      }
+    }
+
+    if (controller.y === 10) {
+      if (prevController.y !== 10) {
+        if (this.charIndex !== 3) {
+          this.nextChar();
+        }
+      }
+    }
+
     if (controller.up) {
       if (!prevController.up) {
         if (this.charIndex === 3) {
@@ -89,6 +105,20 @@ class SaveScore {
         } else {
           this.prevChar();
         }
+      }
+    }
+
+    if (controller.x === -10) {
+      if (prevController.x !== -10) {
+        if (this.charIndex === 0) this.charIndex = 3;
+        else this.charIndex--;
+      }
+    }
+
+    if (controller.x === 10) {
+      if (prevController.x !== 10) {
+        this.charIndex++;
+        this.charIndex %= 4;
       }
     }
 
