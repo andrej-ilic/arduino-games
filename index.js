@@ -61,9 +61,20 @@ app.post("/scoreboard/:name/:score", (req, res) => {
 });
 
 io.on("connection", socket => {
-  parser.on("data", line => socket.emit("data", line));
+  parser.on("data", line => {
+    if (line.includes("modeChanged")) {
+      socket.emit("modeChanged");
+    } else {
+      socket.emit("data", line.trim());
+    }
+  });
 
   socket.on("sound", data => port.write(data));
+
+  socket.on("mode", mode => {
+    mode = Number.parseInt(mode, 2);
+    port.write(`m${mode}`);
+  });
 });
 
 server.listen(process.env.PORT);

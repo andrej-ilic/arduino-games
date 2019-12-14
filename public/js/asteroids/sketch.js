@@ -13,6 +13,15 @@ function setup() {
   HEIGHT = height;
   textFont("Arial Black");
 
+  noLoop();
+
+  socket.emit("mode", "111111");
+
+  socket.on("modeChanged", () => {
+    state = Menu.getInstance();
+    loop();
+  });
+
   socket.on("data", data => {
     data = data.split(",").map(x => Number(x));
     controller.x = data[0];
@@ -22,12 +31,10 @@ function setup() {
     controller.left = data[4];
     controller.right = data[5];
   });
-
-  state = Menu.getInstance();
 }
 
 function draw() {
-  state.draw();
+  state && state.draw();
 }
 
 function changeState(newState) {
