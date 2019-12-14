@@ -9,6 +9,19 @@
     <title>Arduino Games</title>
   </head>
   <body>
+    <div class="container-fluid my-3">
+      <div class="row justify-content-center">
+        <div class="col text-center">
+          <div class="btn btn-primary mr-2" onclick="changeRoute('/asteroids')">
+            Asteroids
+          </div>
+          <div class="btn btn-warning active" onclick="changeRoute('/game2')">
+            Game 2
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container-fluid">
       <div class="row justify-content-center my-3">
         <div class="col text-center">
@@ -24,15 +37,6 @@
   <script src="lib/p5.min.js"></script>
   <script src="lib/p5.collide2d.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="js/menu/menu.js"></script>
-  <script src="js/menu/pauseScreen.js"></script>
-  <script src="js/gameOver/gameOver.js"></script>
-  <script src="js/scoreboard/scoreboard.js"></script>
-  <script src="js/scoreboard/saveScore.js"></script>
-  <script src="js/game/player.js"></script>
-  <script src="js/game/bullet.js"></script>
-  <script src="js/game/asteroid.js"></script>
-  <script src="js/game/particle.js"></script>
-  <script src="js/game/game.js"></script>
-  <script src="js/sketch.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/game2/sketch.js"></script>
 </html>

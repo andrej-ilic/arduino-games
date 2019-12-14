@@ -17,7 +17,13 @@ const scoreFile = process.env.SCORE_FILE;
 
 app.use(express.static("public"));
 
-app.get("/", (req, res) => res.sendFile(__dirname + "/public/index.html"));
+app.get("/", (req, res) => res.redirect("/asteroids"));
+
+app.get("/asteroids", (req, res) =>
+  res.sendFile(__dirname + "/public/asteroids.html")
+);
+
+app.get("/game2", (req, res) => res.sendFile(__dirname + "/public/game2.html"));
 
 app.get("/scoreboard", (req, res) => {
   try {
