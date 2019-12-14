@@ -65,6 +65,7 @@ io.on("connection", socket => {
     if (line.includes("modeChanged")) {
       socket.emit("modeChanged");
     } else {
+      if (line.trim().match(/([0-9]+,)*[0-9]+/) === null) return;
       socket.emit("data", line.trim());
     }
   });

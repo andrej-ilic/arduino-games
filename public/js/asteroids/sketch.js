@@ -13,13 +13,10 @@ function setup() {
   HEIGHT = height;
   textFont("Arial Black");
 
-  noLoop();
-
   socket.emit("mode", "111111");
 
   socket.on("modeChanged", () => {
     state = Menu.getInstance();
-    loop();
   });
 
   socket.on("data", data => {
@@ -31,6 +28,8 @@ function setup() {
     controller.left = data[4];
     controller.right = data[5];
   });
+
+  state = new LoadingScreen();
 }
 
 function draw() {

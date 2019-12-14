@@ -12,13 +12,9 @@ function setup() {
   WIDTH = width;
   HEIGHT = height;
 
-  noLoop();
-
   socket.emit("mode", "1000000");
 
-  socket.on("modeChanged", () => {
-    loop();
-  });
+  socket.on("modeChanged", () => {});
 
   socket.on("data", data => {
     data = data.split(",").map(x => Number(x));
@@ -26,6 +22,8 @@ function setup() {
   });
 
   vec = createVector(0, 0);
+
+  state = new LoadingScreen();
 }
 
 function draw() {
