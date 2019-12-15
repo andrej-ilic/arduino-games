@@ -3,7 +3,7 @@
 #define DATA_N 7
 
 // xAcc, right, left, down, up, yJoy, xJoy
-long mode;
+long mode = 0;
 
 int data[DATA_N];
 int prevData[DATA_N];
@@ -46,7 +46,6 @@ void printData() {
 
 void setup() {
   for (int i = 0; i < DATA_N; i++) {
-    mode |= 1 << i;
     prevData[i] = -1000;
   }
   
@@ -58,7 +57,6 @@ void loop() {
     switch (Serial.read()) {
       case 'm':
         mode = Serial.parseInt();
-        Serial.println(mode);
         Serial.println("modeChanged");
         break;
       case 'f':

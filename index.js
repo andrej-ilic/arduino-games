@@ -23,7 +23,7 @@ app.get("/asteroids", (req, res) =>
   res.sendFile(__dirname + "/public/asteroids.html")
 );
 
-app.get("/game2", (req, res) => res.sendFile(__dirname + "/public/game2.html"));
+app.get("/catch", (req, res) => res.sendFile(__dirname + "/public/catch.html"));
 
 app.get("/scoreboard", (req, res) => {
   try {

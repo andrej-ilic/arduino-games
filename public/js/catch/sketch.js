@@ -14,11 +14,13 @@ function setup() {
 
   socket.emit("mode", "1000000");
 
-  socket.on("modeChanged", () => {});
+  socket.on("modeChanged", () => {
+    state = new Game();
+  });
 
   socket.on("data", data => {
     data = data.split(",").map(x => Number(x));
-    controller.xAcc = data[0];
+    controller.xAcc = map(data[0], -16, 16, -20, 20);
   });
 
   vec = createVector(0, 0);
