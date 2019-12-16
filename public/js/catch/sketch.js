@@ -1,6 +1,6 @@
 const socket = io(`http://localhost:5000`);
 
-const controller = { xAcc: 0 };
+const controller = { xAcc: 0, up: 0 };
 let prevController = {};
 let WIDTH, HEIGHT;
 
@@ -12,7 +12,7 @@ function setup() {
   WIDTH = width;
   HEIGHT = height;
 
-  socket.emit("mode", "1000000");
+  socket.emit("mode", "1000100");
 
   socket.on("modeChanged", () => {
     state = new Game();
@@ -20,7 +20,8 @@ function setup() {
 
   socket.on("data", data => {
     data = data.split(",").map(x => Number(x));
-    controller.xAcc = map(data[0], -16, 16, -20, 20);
+    controller.up = data[0];
+    controller.xAcc = map(data[1], -16, 16, -20, 20);
   });
 
   vec = createVector(0, 0);
