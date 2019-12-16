@@ -3,12 +3,12 @@ class Game {
     Game.padding = HEIGHT / 20;
     Game.laneCount = 10;
     Game.lanes = [];
+    Game.laneSize = (WIDTH - Game.padding * 2) / Game.laneCount;
     for (let i = 0; i < Game.laneCount; i++) {
-      Game.lanes[i] =
-        Game.padding + (i * (WIDTH - 2 * Game.padding)) / Game.laneCount;
+      Game.lanes[i] = Game.padding + i * Game.laneSize + Game.laneSize / 2;
     }
     Game.speed = 4;
-    Game.generatorCooldown = 60;
+    Game.generatorCooldown = 50;
 
     this.player = new Player();
     this.items = [];
@@ -26,7 +26,7 @@ class Game {
     this.items.forEach(i => {
       i.draw();
       i.update();
-      if (i.hit(this.player)) {
+      if (this.player.collidedWithItem(i)) {
         i.canBeDeleted = true;
       }
     });
